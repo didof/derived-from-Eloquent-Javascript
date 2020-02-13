@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correlation</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="input_wrapper">
+
+        <div class="patient_info">
+            <div class="event_choice">
+                <label for="select">Smoke: </label>
+                <select class="event">
+                    <option value="true">Y</option>
+                    <option value="false">N</option>
+                </select>
+            </div>
+            <div class="disease_choice">
+                <label for="select">Tumor: </label>
+                <select class="disease">
+                    <option value="true">Y</option>
+                    <option value="false">N</option>
+                </select>
+            </div>
+        </div>
+        <div class="handlers">
+            <input type="submit" class="addEntryHandler" value="Add Entry"><input type="number"
+                class="patients_quantity" value="1">
+            <input type="submit" class="showJournal" value="Show Journal">
+            <input type="submit" class="calculateCorrelation" value="Calculate Correlation">
+        </div>
+    </div>
+
+    <div class="show_wrapper">
+        <ul class="patient_list">
+            <li><span>Patient</span><span>Event</span><span>Disease</span></li>
+        </ul>
+    </div>
+
+    <div class="graph">
+        <!-- <table>
+            <tr>
+                <td></td>
+                <td>no-disease</td>
+                <td>disease</td>
+            </tr>
+            <tr>
+                <td>no-event</td>
+                <td id="no-no">test</td>
+                <td id="no-si">test</td>
+            </tr>
+            <tr>
+                <td>event</td>
+                <td id="si-no">test</td>
+                <td id="si-si">test</td>
+            </tr>
+        </table> -->
+        <span id="output"></span>
+    </div>
+
+
+
+
+
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
