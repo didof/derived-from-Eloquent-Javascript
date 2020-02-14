@@ -93,9 +93,19 @@ const DisplayModule = (() => {
             document.querySelector('.patient_label').textContent = "Patient #" + (obj.num + 1);
         },
         updateList: (crowd) => {
-            console.log(crowd);
             for(let i = 0; i < crowd.length; i++) {
                 DisplayModule.addPatientToList(crowd[i]);
+            }
+        },
+        showCorrelation: (events, coefs) => {
+            let template, newHTML;
+
+            for(let i = 0; i < events.length; i++) {
+            template = '<li>Event: %event% - correlation: %coef%</li>';
+            newHTML = template.replace('%event%', events[i]);
+            newHTML = newHTML.replace('%coef%', coefs[i]);
+
+            document.querySelector('.correlation_wrapper').insertAdjacentHTML('beforeend', newHTML);
             }
         }
     }
@@ -104,8 +114,9 @@ const DisplayModule = (() => {
 
 
 const LogicModule = (() => {
-    let firstName, lastName, eventArr, disease, patientObj, journal, num, randomArr, howManyEvents;
-    
+    let firstName, lastName, eventArr, disease, patientObj, journal, num, randomArr, howManyEvents, allEventsArr, noDoubleArr;
+
+    noDoubleArr = [];
     eventArr = [];
     journal = [];
     num = 1;
@@ -162,6 +173,18 @@ const LogicModule = (() => {
         return randomObj;
     }
 
+    const buildTable = (observation) => {
+        let table;
+        table = [0, 0, 0, 0];
+        for(let i = 0; i < journal.length; i++) {
+            let index = 0;
+            if(journal[i].eventArr.includes(observation)) index += 1;
+            if(journal[i].disease == true) index += 2;
+            table[index] += 1;
+        }
+        return table;
+    }
+
     return {
         test: () => {
             return true;
@@ -186,6 +209,9 @@ const LogicModule = (() => {
             // increment id
             num++;
 
+            // update updateAllEventsArr
+            LogicModule.updateAllEventsArr();
+
             // return it as object
             return patientObj;
         },
@@ -202,7 +228,54 @@ const LogicModule = (() => {
         addCrowd: (crowd) => {
             for(let i = 0; i < crowd.length; i++) {
                 journal.push(crowd[i]);
+            
+            // update updateAllEventsArr
+            LogicModule.updateAllEventsArr();
             }
+        },
+        updateAllEventsArr: () => {
+             allEventsArr = [];
+        
+        for(let i = 0; i < journal.length; i++) {
+            allEventsArr.push(journal[i].eventArr);
+        }
+        allEventsArr.flat().map(value => {
+            if(!noDoubleArr.includes(value)) {
+                noDoubleArr.push(value);
+            }
+        });
+        return noDoubleArr;
+        },
+        calculateAllTables: () => {
+
+        let allTables;
+        allTables = [];
+
+        for(let i = 0; i < noDoubleArr.length; i++) {
+            allTables.push(buildTable(noDoubleArr[i]));
+        }
+
+        return allTables;
+        },
+        calculateCoefficient: (tables) => {
+            let coefArr;
+
+            coefArr = [];
+
+            for(let i = 0; i < tables.length; i++) {
+                let dividend, divisor, coefficient;
+                for(let j = 0; j < tables[i].length; j++) {
+                    dividend = (tables[i][3] * tables[i][0]) - (tables[i][2] * tables[i][1])
+                    divisor = Math.sqrt((tables[i][2] + tables[i][3]) *
+                                        (tables[i][0] + tables[i][1]) *
+                                        (tables[i][1] + tables[i][3]) *
+                                        (tables[i][0] + tables[i][2]));
+
+                    coefficient = dividend / divisor;
+                }
+                coefArr.push(coefficient);
+            }
+            return coefArr;
         }
     }
 })();
@@ -237,6 +310,9 @@ const Controll = ((display, logic) => {
             // random Handler
             document.getElementById('randomHandler').addEventListener('click', insertRandomCrowd);
 
+            // correlation handler
+            document.getElementById('correlationHandler').addEventListener('click', calculateCorrelation);
+
         //ogni volta che crei un nuovo event spostare il focus nel nuovo event
 
         
@@ -258,7 +334,7 @@ const Controll = ((display, logic) => {
         display.resertForm(crowd[crowd.length - 1]);
     }
 
-    const getInput = function() {
+    const getInput = () => {
         // ask LogicModule => get, push, return fieldsInput as an object, patientInput
         let patientObj = logic.getInput();
 
@@ -267,6 +343,19 @@ const Controll = ((display, logic) => {
 
         // ask DisplayModule => update the list of patients
         display.addPatientToList(patientObj);
+    }
+
+    const calculateCorrelation = () => {
+        let noDoubleArr, allTables, allCoefficients;
+
+        noDoubleArr = logic.updateAllEventsArr();
+
+        allTables = logic.calculateAllTables();
+        
+        allCoefficients = logic.calculateCoefficient(allTables);
+        
+        display.showCorrelation(noDoubleArr, allCoefficients);
+        
     }
 
 
