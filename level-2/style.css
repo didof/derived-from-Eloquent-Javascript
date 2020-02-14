@@ -1,0 +1,91 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fff;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 4fr 12fr;
+    grid-template-rows: 255px 3fr;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.new_patient_wrapper {
+    position: fixed;
+    float: left;
+
+    background-color: #eee;
+    box-shadow: -2px -2px 5px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 10px;
+}
+.list_wrapper {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+    background-color: #ccc;
+}
+
+.new_patient_wrapper .patient_label{
+    font-size: 3rem;
+    color: rgb(3, 89, 139);
+}
+
+.new_patient_wrapper .input_firstname, .input_lastname, .input_event {
+    height: 30px;
+    margin: 5px 0;
+    padding: 3px;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    font-size: 20px;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.new_patient_wrapper .input_event {
+    width: calc(100% - 120px);
+}
+
+.new_patient_wrapper .input_add_event, .input_remove_event, .input_submit {
+    background-color: rgb(164, 248, 164);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.3);
+    margin: 0 10px;
+    cursor: pointer;
+
+    transform: translateY(2px);
+    transition: 0.3s 0.1s ease;
+
+}
+.new_patient_wrapper .input_add_event:hover, .input_remove_event:hover, .input_submit:hover {
+    transform: translateY(-2px);
+    transition: 0.5s ease;
+}
+
+.new_patient_wrapper .input_remove_event[disabled] {
+    background-color: grey;
+}
+
+.new_patient_wrapper .patient_events {
+    list-style: none;
+}
+
+.new_patient_wrapper .input_submit {
+    width: 80px;
+    height: 40px;
+}
