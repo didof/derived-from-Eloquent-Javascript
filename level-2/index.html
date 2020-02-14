@@ -11,7 +11,7 @@
 
 <body>
     <div class="new_patient_wrapper">
-        <h3 class="patient_label">Patient #test</h3>
+        <h3 class="patient_label">Patient #1</h3>
         <div class="patient_info">
             <div><input type="text" class="input_firstname" placeholder="firstname"></div>
             <div><input type="text" class="input_lastname" placeholder="lastname"></div>
@@ -24,14 +24,36 @@
             </li>
         </ul>
         <div class="patient_disease">
-            Disease: <input type="radio" class="input_disease">
+            Disease: <input type="checkbox" class="input_disease">
             <input type="submit" class="input_submit" value="Add Entry">
         </div>
     </div>
 
-    <div class="list_wrapper">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam iste eos, consequuntur,
-        mollitia molestiae minus, alias magnam explicabo saepe vero ducimus eveniet quaerat animi reiciendis dolorum ea
-        odit. Dolorum at aspernatur expedita suscipit iusto in veniam unde explicabo ipsum! Nemo.</div>
+    <div class="list_wrapper">
+        <div class="list_options">
+            <input type="checkbox">Auto-sort
+            <input type="button" value="Add Random Patiens" id="randomHandler">
+            <input type="button" value="Search and Calculate Correlation" id="correlationHandler">
+        </div>
+        <ul class="list_show">
+            <!-- <li class="patient_row" id="patient-1">
+                <div class="patient_number">#1</div>
+                <div class="patient_bio">Doe, John</div>
+                <div class="patient_events">peanuts, apple, orange</div>
+                <div class="patient_delete">
+                    <input type="button" class="patient_delete_btn" id="patient_delete_1" value="X">
+                </div>
+            </li>
+            <li class="patient_row disease" id="patient-2">
+                <div class="patient_number">#2</div>
+                <div class="patient_bio">Stuart, Mary</div>
+                <div class="patient_events">dogs, apple, sun</div>
+                <div class="patient_delete">
+                    <input type="button" class="patient_delete_btn" id="patient_delete_2" value="X">
+                </div>
+            </li> -->
+        </ul>
+    </div>
 
 
 
